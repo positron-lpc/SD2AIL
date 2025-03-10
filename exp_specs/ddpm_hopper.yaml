@@ -17,11 +17,11 @@ variables:
 
   seed: [0]
   disc_ddpm_n_timesteps: [ 10 ]
-  disc_ddpm_beta_schedule: [ "linear" ] # ["cosine","vp","linear"]
+  disc_ddpm_beta_schedule: [ "linear" ]
   disc_clamp_magnitude: [ 0 ]
   traj_num: [ 4 ]  # [ 1 ]
   replay_params:
-    replay_model: ["multi_priority" ] # ["normal","multi_priority"]
+    replay_model: ["priority" ] # ["normal","priority"]
     priority_alpha: [0.8]
     priority_beta: [ 0.6 ]
 # -----------------------------------------------------------------------------
@@ -75,7 +75,7 @@ constants:
     # save_environment: false
 
   replay_params:
-    replay_model: "normal" # ["normal","multi_priority"]
+    replay_model: "normal" # ["normal","priority"]
     priority_alpha: None
     priority_beta: None
 

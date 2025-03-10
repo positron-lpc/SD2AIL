@@ -55,7 +55,7 @@ class AdvIRL(TorchBaseAlgorithm):
 
         self.fake_expert_replay_buffer = fake_expert_replay_buffer
         if isinstance(self.expert_replay_buffer, list):
-            self.replay_mode = "multi_priority"
+            self.replay_mode = "priority"
         elif isinstance(self.expert_replay_buffer, EnvReplayBuffer):
             self.replay_mode = "normal"
         else:
@@ -70,7 +70,7 @@ class AdvIRL(TorchBaseAlgorithm):
             self.discriminator.parameters(), lr=disc_lr, betas=(disc_momentum, 0.999)
         )
         self.disc_expert_optim_batch_size = disc_optim_batch_size // len(expert_replay_buffer) \
-            if self.replay_mode == "multi_priority" \
+            if self.replay_mode == "priority" \
             else disc_optim_batch_size
         self.disc_policy_optim_batch_size = disc_optim_batch_size
         print("\n\nDISC MOMENTUM: %f\n\n" % disc_momentum)
@@ -104,7 +104,7 @@ class AdvIRL(TorchBaseAlgorithm):
     # get batch from replay buffer
     def get_batch(self, batch_size, from_expert, keys=None):
         if from_expert:
-            if self.replay_mode == "multi_priority":
+            if self.replay_mode == "priority":
                 expert_batches, idxs, is_weights = [], [], []
                 for i in range(len(self.expert_replay_buffer)):
                     expert_batch, idx, is_weight = self.expert_replay_buffer[i].random_batch(batch_size, keys)
@@ -273,7 +273,7 @@ class AdvIRL(TorchBaseAlgorithm):
 
         abs_errors = torch.abs(
             expert_d - torch.ones(expert_d.size(), device=ptu.device)).detach().cpu().numpy().squeeze()
-        if self.replay_mode == "multi_priority":
+        if self.replay_mode == "priority":
             for i in range(len(self.expert_replay_buffer)):
                 size = self.disc_expert_optim_batch_size
                 start = i * size
@@ -333,7 +333,7 @@ class AdvIRL(TorchBaseAlgorithm):
         if self.wrap_absorbing:
             keys.append("absorbing")
 
-        if self.replay_mode == "multi_priority":
+        if self.replay_mode == "priority":
             expert_batch, idx, is_weight = self.get_batch(self.disc_expert_optim_batch_size, True, keys)
         else:
             expert_batch = self.get_batch(self.disc_expert_optim_batch_size, True, keys)

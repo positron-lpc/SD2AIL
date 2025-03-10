@@ -59,7 +59,7 @@ def experiment(variant):
     print("Obs Space: {}".format(env.observation_space))
     print("Act Space: {}\n\n".format(env.action_space))
     # multi trajectories replay buffer
-    if variant["replay_params"]["replay_model"] == "multi_priority":
+    if variant["replay_params"]["replay_model"] == "priority":
         capacity = variant["adv_irl_params"]["max_path_length"]
         expert_replay_buffer = [PrioritizedReplayBuffer(
             capacity,
@@ -160,7 +160,7 @@ def experiment(variant):
     )
 
     for i in range(len(traj_list)):
-        if variant["replay_params"]["replay_model"] == "multi_priority":
+        if variant["replay_params"]["replay_model"] == "priority":
             expert_replay_buffer[i].add_path(
                 traj_list[i], absorbing=variant["adv_irl_params"]["wrap_absorbing"], env=env,
             )

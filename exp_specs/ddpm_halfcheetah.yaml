@@ -2,7 +2,7 @@ meta_data:
   script_path: run_scripts/adv_irl_ddpm_exp_script.py
   exp_name: new_ddpm_halfcheetah
   description: Train an adversarial IRL model
-  num_workers: 4 # 64
+  num_workers: 1 # 64
   using_gpus: true
 # -----------------------------------------------------------------------------
 variables:
@@ -18,7 +18,7 @@ variables:
   disc_ddpm_beta_schedule: [ "linear" ] # ,"cosine","vp"
   traj_num: [ 4 ] # [1,4,16]
   replay_params:
-    replay_model: [ "multi_priority" ] # ["normal","multi_priority"]
+    replay_model: [ "priority" ] # ["normal","priority"]
     priority_alpha: [0.8]
     priority_beta: [ 0.4 ]
 # -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ constants:
     save_replay_buffer: false
     # save_environment: false
   replay_params:
-    replay_model: [ "normal" ] # ["normal","multi_priority"]
+    replay_model: [ "normal" ] # ["normal","priority"]
     priority_alpha: [ 0.0 ]
     priority_beta: [ 0.0 ]
 

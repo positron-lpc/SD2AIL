@@ -204,7 +204,7 @@ def deal_ablation_to_npy(target_dir="./npy_ablation_result/diffusion_timesteps/"
 
 if __name__ == '__main__':
 
-    env_clips = {"Ant": 50, "Hopper": 75, "Walker": 75, "Halfcheetah": 50, "Swimmer": 50, "Reacher": 50,
+    env_clips = {"Ant": 45, "Hopper": 45, "Walker": 45, "Halfcheetah": 45, "Swimmer": 45, "Reacher": 45,
                  "InvertedDoublePendulum": 50,
                  "InvertedPendulum": 50}
 
@@ -236,7 +236,6 @@ if __name__ == '__main__':
         deal_csv_to_entropy_npy(target_dir=entropy_target_dirs[i], result_path=ILSwiss_result_dirs[i],
                                 env_clips=env_clips)
 
-
     # ILSwiss lfd
     for i in range(len(ILSwiss_result_dirs)):
         deal_csv_to_npy(target_dir=target_dirs[i], result_path=ILSwiss_result_dirs[i], env_clips=env_clips)
@@ -253,10 +252,6 @@ if __name__ == '__main__':
     # dice CFIL lfo
     for i in range(len(dice_lfo_result_dirs)):
         deal_txt_to_npy(target_dir=lfo_target_dirs[i], result_path=dice_lfo_result_dirs[i], env_clips=env_clips)
-
-    # dice OPOLO lfo
-    for i in range(len(dice_lfo_result_dirs)):
-        deal_opolo_to_npy(target_dir=lfo_target_dirs[i], result_path=dice_lfo_result_dirs[i], env_clips=env_clips)
 
     for i in range(len(dice_result_dirs)):
         deal_npy_to_npy(target_dir=target_dirs[i], result_path=dice_result_dirs[i], env_clips=env_clips)

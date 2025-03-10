@@ -21,7 +21,7 @@ variables:
   disc_clamp_magnitude: [ 0 ]
    # true,false
   replay_params:
-    replay_model: [ "multi_priority" ] # ["normal","multi_priority"]
+    replay_model: [ "priority" ] # ["normal","priority"]
     priority_alpha: [0.6]
     priority_beta: [ 0.4 ]
 # -----------------------------------------------------------------------------
@@ -77,7 +77,7 @@ constants:
     save_replay_buffer: false
     # save_environment: false
   replay_params:
-    replay_model: "normal" # ["normal","multi_priority"]
+    replay_model: "normal" # ["normal","priority"]
     priority_alpha: None
     priority_beta: None
 
